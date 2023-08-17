@@ -1,0 +1,35 @@
+Step 1: Run the following command to display information about the block devices:
+$ lsblk
+Note: You now see that the system recognizes a new disk device, and the size.
+
+Step 2: To verify that the volume is attached to the instance, run the following command:
+$ ll /dev/oracleoci/oraclevd*
+
+Step 3: To partition the disk using fdisk, run the following command:
+$ sudo fdisk /dev/oracleoci/oraclevdb
+Note: Enter the following responses as seen in the Cloud Shell:
+a. Command (m for help): Enter n to create a new partition.
+b. Select (default p): Enter p.
+c. Partition number (1,4, default 1): Press Enter.
+d. First sector: Press Enter.
+e. Last sector: Press Enter.
+f. Command (m for help): Enter w to write the new partition.
+
+Step 4: To format the partition, run the following command:
+$ sudo mkfs -t ext4 /dev/oracleoci/oraclevdb1
+
+Step 5: To mount the partition, run the following commands:
+$ sudo mkdir -p /mnt/volume1
+$ sudo mount /dev/oracleoci/oraclevdb1 /mnt/volume1
+Note: On Linux instances, if you want to automatically mount volumes on an instance
+boot, you need to set some specific options in the /etc/fstab file.
+
+Step 6: To display information about the block devices, run the following command:
+$ lsblk
+Note: You now see the partition and the mountpoint /mnt/volume1.
+
+Step 7: Permanently Mount follow below command,
+$ blkid
+
+Step 8: Enter UUID in /etc/fstab file from previous command.
+UUID="36b37de3-b388-4a87-a459-061919875137" /path/to/mount ext4 defaults,nofail   0  2
